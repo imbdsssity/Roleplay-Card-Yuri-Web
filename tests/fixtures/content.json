@@ -1,0 +1,143 @@
+[
+  {
+    "id": "example-card",
+    "slug": "example-card",
+    "status": "draft",
+    "title": {
+      "en": "Synthetic example",
+      "zh": "Synthetic example"
+    },
+    "summary": {
+      "en": "Synthetic test data only.",
+      "zh": "Synthetic test data only."
+    },
+    "detailPath": {
+      "en": "src/content/cards/example-en.md",
+      "zh": "src/content/cards/example-zh.md"
+    },
+    "imagePath": "/images/example.webp",
+    "attribution": [
+      "Synthetic fixture"
+    ],
+    "sourceUrl": null,
+    "rights": "unknown",
+    "version": "test",
+    "updated": "2026-11-21",
+    "type": "card",
+    "createdWithYuri": "unknown",
+    "originalPng": {
+      "en": {
+        "objectKey": "example/example.png",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "version": "test",
+        "filename": "example.png"
+      },
+      "zh": {
+        "objectKey": "example/example.png",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "version": "test",
+        "filename": "example.png"
+      }
+    },
+    "json": {
+      "en": {
+        "objectKey": "example/example.json",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "version": "test",
+        "filename": "example.json"
+      },
+      "zh": {
+        "objectKey": "example/example.json",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "version": "test",
+        "filename": "example.json"
+      }
+    },
+    "variantReview": {
+      "en": {
+        "result": "unverified",
+        "evidence": null
+      },
+      "zh": {
+        "result": "unverified",
+        "evidence": null
+      }
+    }
+  },
+  {
+    "id": "example-worldbook",
+    "slug": "example-worldbook",
+    "status": "draft",
+    "title": {
+      "en": "Synthetic example",
+      "zh": "Synthetic example"
+    },
+    "summary": {
+      "en": "Synthetic test data only.",
+      "zh": "Synthetic test data only."
+    },
+    "detailPath": {
+      "en": "src/content/worldbooks/example-en.md",
+      "zh": "src/content/worldbooks/example-zh.md"
+    },
+    "imagePath": "/images/example.webp",
+    "attribution": [
+      "Synthetic fixture"
+    ],
+    "sourceUrl": null,
+    "rights": "unknown",
+    "version": "test",
+    "updated": "2026-11-21",
+    "type": "worldbook",
+    "json": {
+      "en": {
+        "objectKey": "example/example.json",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "version": "test",
+        "filename": "example.json"
+      },
+      "zh": {
+        "objectKey": "example/example.json",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "version": "test",
+        "filename": "example.json"
+      }
+    },
+    "references": {
+      "en": [
+        "Synthetic reference"
+      ],
+      "zh": [
+        "Synthetic reference"
+      ]
+    },
+    "mapping": [
+      {
+        "uid": 0,
+        "codePrefix": null,
+        "entry": {
+          "en": "Example",
+          "zh": "Example"
+        },
+        "activation": {
+          "en": "Example",
+          "zh": "Example"
+        },
+        "source": {
+          "en": "Example",
+          "zh": "Example"
+        }
+      }
+    ],
+    "mappingReview": {
+      "en": {
+        "sourceEntryCount": 1,
+        "checkedAgainst": "Synthetic fixture"
+      },
+      "zh": {
+        "sourceEntryCount": 1,
+        "checkedAgainst": "Synthetic fixture"
+      }
+    }
+  }
+]

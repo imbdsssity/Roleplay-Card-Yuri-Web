@@ -1,0 +1,11 @@
+---
+export function getStaticPaths() {
+  return [{ params: { locale: 'en' } }, { params: { locale: 'zh' } }];
+}
+const zh = Astro.params.locale === 'zh';
+---
+<!doctype html>
+<html lang={zh ? 'zh-Hans' : 'en'}>
+  <head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="robots" content="noindex, nofollow" /><title>{zh ? '角色扮演档案' : 'Roleplay Archive'}</title></head>
+  <body><main><h1>{zh ? '角色扮演档案' : 'Roleplay Archive'}</h1><p>{zh ? '网站正在建设中。' : 'This site is under construction.'}</p></main></body>
+</html>
