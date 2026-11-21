@@ -1,0 +1,28 @@
+---
+import { copy } from '../lib/copy.mjs';
+import { downloadPath } from '../lib/archive.mjs';
+interface Props { item: any; locale: 'en' | 'zh'; Article: any }
+const { item, locale, Article } = Astro.props;
+const t = copy[locale];
+const png = item.type === 'card' ? item.originalPng[locale] : null;
+const media = png ? `/media/${png.objectKey.split('/').map(encodeURIComponent).join('/')}` : item.imagePath;
+---
+<div class="page-shell detail-page">
+  <a class="back" href={`/${locale}/`}>{t.back}</a>
+  <header class="detail-heading"><p class="eyebrow">{item.type === 'card' ? t.cards : t.worldbooks}</p><h1>{item.title[locale]}</h1><p class="lead">{item.summary[locale]}</p></header>
+  <div class="detail-grid">
+    <div class="detail-art">
+      {png ? <a href={downloadPath(png)} aria-label={t.downloadPng}><img src={media} alt={item.title[locale]} width="600" height="750" /></a> : <img src={media} alt={item.title[locale]} width="600" height="750" />}
+      {item.type === 'worldbook' && <a class="download" href={downloadPath(item.json[locale])}>{t.downloadJson}</a>}
+    </div>
+    <article class="prose">
+      {Article && <Article />}
+      {item.type === 'card' && <p><a class="download" href={downloadPath(item.json[locale])}>{t.downloadJson}</a></p>}
+      <div class="attribution">{item.attribution.map((credit: string) => <p>{credit}</p>)}</div>
+    </article>
+  </div>
+  {item.type === 'worldbook' && <section class="reference-section"><h2>{t.references}</h2><ul>{item.references[locale].map((reference: string) => <li>{reference}</li>)}</ul>
+    <h2 id="mapping-heading">{t.mapping}</h2><p class="table-hint">{t.loadTable}</p>
+    <div class="table-wrapper" role="region" aria-labelledby="mapping-heading" tabindex="0"><table><thead><tr><th scope="col">{t.uid}</th><th scope="col">{t.code}</th><th scope="col">{t.entry}</th><th scope="col">{t.activation}</th><th scope="col">{t.source}</th></tr></thead><tbody>{item.mapping.map((row: any) => <tr><th scope="row">{row.uid}</th><td>{(row.codePrefix && typeof row.codePrefix === 'object' ? row.codePrefix[locale] : row.codePrefix) ?? '—'}</td><td>{row.entry[locale]}</td><td>{row.activation[locale]}</td><td>{row.source[locale]}</td></tr>)}</tbody></table></div>
+  </section>}
+</div>
