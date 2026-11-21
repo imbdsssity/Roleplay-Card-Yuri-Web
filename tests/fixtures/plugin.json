@@ -1,0 +1,21 @@
+{
+  "version": "test",
+  "releaseUrl": "https://example.com/releases/test",
+  "updated": "2026-11-21",
+  "assets": [
+    {
+      "label": {
+        "en": "Example",
+        "zh": "Example"
+      },
+      "format": "zip",
+      "url": "https://example.com/example.zip",
+      "sha256": null,
+      "compatibility": {
+        "en": "Fixture only",
+        "zh": "Fixture only"
+      },
+      "verification": "Synthetic fixture"
+    }
+  ]
+}
