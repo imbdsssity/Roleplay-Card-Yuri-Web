@@ -85,6 +85,7 @@ export function parseCard(bytes) {
   try { text = decoder.decode(bytes); } catch { throw Error('invalid-card-json'); }
   try { card = parseStrictJson(text); } catch (e) {
     if (e.message === 'invalid-json') throw Error('invalid-card-json');
+    if (e.message === 'json-too-deep') throw Error('card-too-deep');
     throw e;
   }
   if (!card || Array.isArray(card) || typeof card !== 'object' ||
