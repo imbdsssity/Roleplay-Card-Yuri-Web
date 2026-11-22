@@ -42,3 +42,11 @@ test('fails closed on malformed, incomplete or ambiguous tables', () => {
   const noTable=sources(); noTable.zh.readmeText='# No tables';
   assert.throws(()=>auditWorldbook(noTable), /section not found/);
 });
+test('rejects duplicate JSON keys and precision-losing numbers before auditing', () => {
+  const duplicate=sources();
+  duplicate.en.jsonText=duplicate.en.jsonText.replace('"entries":', '"\\u0065ntries":[],"entries":');
+  assert.throws(()=>auditWorldbook(duplicate), /duplicate-json-key/);
+  const imprecise=sources();
+  imprecise.zh.jsonText=imprecise.zh.jsonText.replace(/}$/, ',"unsafe":9007199254740993}');
+  assert.throws(()=>auditWorldbook(imprecise), /ambiguous-json-number/);
+});

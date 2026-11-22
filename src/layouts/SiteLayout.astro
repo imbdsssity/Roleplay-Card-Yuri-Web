@@ -1,0 +1,55 @@
+---
+import '../styles/site.css';
+import { copy } from '../lib/copy.mjs';
+interface Props { locale: 'en' | 'zh'; title?: string; description?: string; alternatePath: string }
+const { locale = 'en', title, description, alternatePath } = Astro.props;
+const t = copy[locale];
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const alternate = new URL(alternatePath, Astro.site);
+---
+<!doctype html>
+<html lang={locale === 'zh' ? 'zh-Hans' : 'en'}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <script is:inline>try{const t=localStorage.getItem('archive-theme');if(t==='light'||t==='dark')document.querySelector('meta[name="color-scheme"]').content=t}catch{}</script>
+  <title>{title ? `${title} · ${t.site}` : t.site}</title>
+  <meta name="description" content={description || t.intro} />
+  <link rel="canonical" href={canonical} />
+  <link rel="alternate" hreflang={locale === 'zh' ? 'zh-Hans' : 'en'} href={canonical} />
+  <link rel="alternate" hreflang={locale === 'zh' ? 'en' : 'zh-Hans'} href={alternate} />
+</head>
+<body>
+  <a class="skip" href="#main">{locale === 'zh' ? '跳至正文' : 'Skip to content'}</a>
+  <header class="site-header"><div class="header-inner">
+    <a class="brand" href={`/${locale}/`}>{t.site}<span class="brand-mark">.</span></a>
+    <nav aria-label={locale === 'zh' ? '页面设置' : 'Site preferences'}>
+      <a class="header-link" href="https://github.com/Erxi-Yu-1209" aria-label={t.github}>GitHub</a>
+      <a class="locale-link" href={alternatePath} hreflang={locale === 'zh' ? 'en' : 'zh-Hans'} lang={locale === 'zh' ? 'en' : 'zh-Hans'}>{locale === 'zh' ? 'EN' : '中文'}</a>
+      <button class="theme-toggle" type="button" aria-label={t.theme} aria-pressed="false" hidden><span aria-hidden="true">◐</span></button>
+    </nav>
+  </div></header>
+  <main id="main"><slot /></main>
+  <footer class="site-footer"><div><span>{t.site}</span><span>{t.rights}</span></div></footer>
+  <script>
+    import { chooseOppositeTheme, isDarkTheme } from '../lib/theme.mjs';
+    const meta = document.querySelector('meta[name="color-scheme"]');
+    const button = document.querySelector('.theme-toggle');
+    if (meta instanceof HTMLMetaElement && button instanceof HTMLButtonElement) {
+      const system = window.matchMedia('(prefers-color-scheme: dark)');
+      const syncState = () => button.setAttribute('aria-pressed', String(isDarkTheme(meta.content, system.matches)));
+      syncState();
+      button.hidden = false;
+      button.addEventListener('click', () => {
+        let storage: Storage | undefined;
+        try { storage = window.localStorage; } catch {}
+        meta.content = chooseOppositeTheme(meta.content, system.matches, storage);
+        syncState();
+      });
+      window.addEventListener('storage', (event) => { if (event.key === 'archive-theme') { meta.content = event.newValue === 'light' || event.newValue === 'dark' ? event.newValue : 'light dark'; syncState(); } });
+      system.addEventListener('change', syncState);
+    }
+  </script>
+</body>
+</html>

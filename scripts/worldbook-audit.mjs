@@ -4,6 +4,7 @@ import { readFile, writeFile, realpath } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { resolve, dirname, basename, join, sep } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
+import { parseStrictJson } from './strict-json.mjs';
 
 const langs = ['en', 'zh'];
 const configFields = ['constant', 'vectorized', 'selective', 'selectiveLogic', 'order', 'position', 'disable', 'depth'];
@@ -66,7 +67,7 @@ export function auditWorldbook(inputs) {
   const results = {}; const issues = [];
   for (const lang of langs) {
     const input = inputs[lang];
-    const json = JSON.parse(input.jsonText.replace(/^\uFEFF/, ''));
+    const json = parseStrictJson(input.jsonText.replace(/^\uFEFF/, ''));
     const parsed = parseLocale(json, input.readmeText, lang);
     const {entries, rows} = parsed;
     addSetDifference(issues, lang, 'JSON UID missing from README', entries, rows);
