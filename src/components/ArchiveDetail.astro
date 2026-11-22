@@ -1,4 +1,5 @@
 ---
+import WorldbookCell from './WorldbookCell.astro';
 import { copy } from '../lib/copy.mjs';
 import { downloadPath } from '../lib/archive.mjs';
 interface Props { item: any; locale: 'en' | 'zh'; Article: any }
@@ -23,6 +24,6 @@ const media = png ? `/media/${png.objectKey.split('/').map(encodeURIComponent).j
   </div>
   {item.type === 'worldbook' && <section class="reference-section"><h2>{t.references}</h2><ul>{item.references[locale].map((reference: string) => <li>{reference}</li>)}</ul>
     <h2 id="mapping-heading">{t.mapping}</h2><p class="table-hint">{t.loadTable}</p>
-    <div class="table-wrapper" role="region" aria-labelledby="mapping-heading" tabindex="0"><table><thead><tr><th scope="col">{t.uid}</th><th scope="col">{t.code}</th><th scope="col">{t.entry}</th><th scope="col">{t.activation}</th><th scope="col">{t.source}</th></tr></thead><tbody>{item.mapping.map((row: any) => <tr><th scope="row">{row.uid}</th><td>{(row.codePrefix && typeof row.codePrefix === 'object' ? row.codePrefix[locale] : row.codePrefix) ?? '—'}</td><td>{row.entry[locale]}</td><td>{row.activation[locale]}</td><td>{row.source[locale]}</td></tr>)}</tbody></table></div>
+    <div class="table-wrapper" role="region" aria-labelledby="mapping-heading" tabindex="0"><table><thead><tr><th scope="col">{t.uid}</th><th scope="col">{t.code}</th><th scope="col">{t.entry}</th><th scope="col">{t.activation}</th><th scope="col">{t.source}</th></tr></thead><tbody>{item.mapping.map((row: any) => <tr><th scope="row">{row.uid}</th><td>{(row.codePrefix && typeof row.codePrefix === 'object' ? row.codePrefix[locale] : row.codePrefix) ?? '—'}</td><td><WorldbookCell value={row.entry[locale]} /></td><td><WorldbookCell value={row.activation[locale]} /></td><td><WorldbookCell value={row.source[locale]} /></td></tr>)}</tbody></table></div>
   </section>}
 </div>

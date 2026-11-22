@@ -1,0 +1,20 @@
+---
+import { worldbookCellRuns } from '../lib/worldbook-cell.mjs';
+
+interface Props {
+  value: string;
+}
+
+const runs = worldbookCellRuns(Astro.props.value);
+---
+{runs.map(({ strong, parts }) => (
+  strong ? (
+    <strong>{parts.map(({ kind, text }) => (
+      kind === 'break' ? <br /> : kind === 'code' ? <code>{text}</code> : text
+    ))}</strong>
+  ) : (
+    <Fragment>{parts.map(({ kind, text }) => (
+      kind === 'break' ? <br /> : kind === 'code' ? <code>{text}</code> : text
+    ))}</Fragment>
+  )
+))}
