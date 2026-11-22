@@ -2,10 +2,11 @@
 import SiteLayout from '../../../layouts/SiteLayout.astro';
 import ArchiveDetail from '../../../components/ArchiveDetail.astro';
 import { pagesFor, itemPath } from '../../../lib/archive.mjs';
+import { requireDetailArticle } from '../../../lib/detail-article.mjs';
 export function getStaticPaths() { return pagesFor('worldbook'); }
 const { item } = Astro.props;
 const locale = Astro.props.locale as 'en' | 'zh';
 const markdown = import.meta.glob<{default: any}>('/src/content/worldbooks/**/*.md', { eager: true });
-const Article = markdown[`/${item.detailPath[locale]}`]?.default;
+const Article = requireDetailArticle(markdown, item, locale);
 ---
 <SiteLayout locale={locale} title={item.title[locale]} description={item.summary[locale]} alternatePath={itemPath(item, locale === 'en' ? 'zh' : 'en')}><ArchiveDetail item={item} locale={locale} Article={Article} /></SiteLayout>
