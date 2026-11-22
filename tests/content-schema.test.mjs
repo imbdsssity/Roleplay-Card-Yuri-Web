@@ -36,6 +36,16 @@ test('drafts can record a missing PNG and digest without inventing them', () => 
   const card = structuredClone(fixture[0]); card.originalPng.en = null; card.json.en.sha256 = null;
   assert.equal(contentSchema.safeParse(card).success, true);
 });
+test('worldbook code prefixes preserve each locale and allow missing values independently', () => {
+  const book = structuredClone(fixture[1]);
+  assert.deepEqual(contentSchema.parse(book).mapping[0].codePrefix, {en: 'EN-PREFIX', zh: 'ZH-PREFIX'});
+  book.mapping[0].codePrefix.en = null;
+  assert.deepEqual(contentSchema.parse(book).mapping[0].codePrefix, {en: null, zh: 'ZH-PREFIX'});
+  book.mapping[0].codePrefix = 'OLD-SCALAR';
+  assert.equal(contentSchema.safeParse(book).success, false);
+  book.mapping[0].codePrefix = {en: 'EN-PREFIX'};
+  assert.equal(contentSchema.safeParse(book).success, false);
+});
 test('worldbook UIDs cannot be duplicated', () => {
   const book = structuredClone(fixture[1]); book.mapping.push(structuredClone(book.mapping[0]));
   assert.equal(contentSchema.safeParse(book).success, false);

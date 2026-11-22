@@ -14,4 +14,16 @@ The report includes SHA-256 hashes of UTF-8 source bytes; locale-specific JSON a
 
 The audit records `codePrefix: {en, zh}` to preserve each source prefix and flags differences; it does not substitute one language for another. The coordinated schema change to support this shape has been merged; the UI must display the current locale’s value. Keep all original titles and sources intact. The audit does not write content into `src/content` or create an R2 object.
 
-After owner curation and rights review, a separate ingestion step must create the complete bilingual schema record, descriptions, optimized approved cover, reference arrays and complete mappings. Record explicit human review in each `mappingReview`; inspect JSON importability and verify local, uploaded and downloaded file checksums. `ready` and `published` require the foundation's completeness and rights controls, and only `published` can be rendered or served. Preserve the original JSON bytes for download; do not publish audit output as-is.
+To produce a **private draft record** for review from a completed audit, provide a separate JSON file with explicit `id`, `slug`, `updated` (ISO date), and optional bilingual `title`, `summary`, and `version`. Optionally provide locale-specific `json.en` and `json.zh` objects containing `objectKey`, source `filename`, and confirmed `version`; the tool obtains the digest from the audit rather than accepting an override. Leave file metadata absent when those details are not established. For example (using fictitious names):
+
+```json
+{"id":"example","slug":"example","updated":"2026-11-22","title":{"en":"Example","zh":"示例"}}
+```
+
+```sh
+node scripts/worldbook-draft.mjs /private/book-audit.json /private/metadata.json /private/draft.json
+```
+
+Output must be a new file outside the repository. The script refuses unequal or incomplete paired mapping counts; preserves every localized mapping row and every code-to-source reference in order; uses the executable shared content schema; and fixes status `draft`, rights `unknown`, and review evidence `null`. It does not copy the source descriptions or cover, upload JSON, resolve any audit issue, or mark its output fit for publication. Keep the original audit with its issues and source hashes alongside the draft. Compare against both source files and review all flagged issues: counts alone do not establish accuracy.
+
+After owner curation and rights review, complete the descriptions, optimized approved cover and remaining metadata. Record explicit human review in each `mappingReview`; inspect JSON importability and verify local, uploaded and downloaded file checksums. `ready` and `published` require the foundation's completeness and rights controls, and only `published` can be rendered or served. Preserve the original JSON bytes for download; do not publish audit output as-is.

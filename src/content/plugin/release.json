@@ -1,0 +1,40 @@
+{
+  "version": "1.2.1",
+  "releaseUrl": "https://github.com/imbdsssity/TavernWeave-Yuri/releases/tag/yuri-v1.2.1",
+  "updated": "2026-11-22",
+  "assets": [
+    {
+      "label": { "en": "Portable plugin ZIP", "zh": "便携插件 ZIP" },
+      "format": "zip",
+      "url": "https://github.com/imbdsssity/TavernWeave-Yuri/releases/download/yuri-v1.2.1/TavernWeave-Yuri-portable-v1.2.1.zip",
+      "sha256": "8776cbb1cb62a8a2efa2ff5f9c7c572ce436d9c11c6c5c1c76b21eca573a1155",
+      "compatibility": {
+        "en": "Claude Code, ZCode and Cursor compatible package formats; installation and workflow acceptance remain unverified. Codex / ChatGPT Work import via the yuri-plugin branch is described in the host guide.",
+        "zh": "提供兼容 Claude Code、ZCode 和 Cursor 的包格式；实机安装和工作流验收仍待验证。Codex / ChatGPT Work 的 yuri-plugin 分支导入方式见宿主指南。"
+      },
+      "verification": "GitHub release asset metadata, 2026-11-22; digest published by GitHub. Archive not downloaded or independently hashed."
+    },
+    {
+      "label": { "en": "Gemini extension ZIP", "zh": "Gemini 扩展 ZIP" },
+      "format": "zip",
+      "url": "https://github.com/imbdsssity/TavernWeave-Yuri/releases/download/yuri-v1.2.1/TavernWeave-Yuri-gemini-v1.2.1.zip",
+      "sha256": "f07d4ea09d076432eb6e284ef8331ccd5b350e9b98b3f6662fb933df4ff14938",
+      "compatibility": {
+        "en": "Gemini distribution. Extension installation and skill discovery were reported successful; a fresh 1.2.1 acceptance test is not established.",
+        "zh": "Gemini 分发包。扩展安装和技能识别曾有成功反馈；未确认针对 1.2.1 重新完成验收。"
+      },
+      "verification": "GitHub release asset metadata, 2026-11-22; digest published by GitHub. Archive not downloaded or independently hashed."
+    },
+    {
+      "label": { "en": "DeepSeek Harness TGZ", "zh": "DeepSeek Harness TGZ" },
+      "format": "tgz",
+      "url": "https://github.com/imbdsssity/TavernWeave-Yuri/releases/download/yuri-v1.2.1/TavernWeave-Yuri-DSH-v1.2.1.tgz",
+      "sha256": "94d1f3424f6882f16c2b84b042086aee726ce89b70075cd553f09a9e49874713",
+      "compatibility": {
+        "en": "DeepSeek Harness bundle; earlier 0.5.0 import and discovery were reported successful, not a fresh 1.2.1 acceptance test.",
+        "zh": "DeepSeek Harness 插件包；此前 0.5.0 的导入和识别曾有成功反馈，不代表对 1.2.1 重新完成验收。"
+      },
+      "verification": "GitHub release asset metadata, 2026-11-22; digest published by GitHub. Archive not downloaded or independently hashed."
+    }
+  ]
+}
