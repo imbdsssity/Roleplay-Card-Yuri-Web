@@ -1,0 +1,17 @@
+{
+  "name": "rolecard-cloudflare-integration",
+  "version": "1.0.0",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "build:staging": "npm run typecheck && npm --prefix ../.. run build && cf build --mode staging && node check-output.mjs",
+    "build:production": "npm run typecheck && npm --prefix ../.. run build && cf build --mode production && node check-output.mjs"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "2.0.0-rc.3",
+    "@types/node": "24.10.1",
+    "cf": "1.0.0-rc.2",
+    "vite": "8.3.8"
+  },
+  "private": true
+}
