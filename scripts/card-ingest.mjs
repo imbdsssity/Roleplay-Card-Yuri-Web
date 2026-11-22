@@ -58,8 +58,13 @@ export function readPngMetadata(buf, { includeRaw = false } = {}) {
     if (type === 'IHDR') { if (ihdr) throw Error('invalid-png'); ihdr = true; }
     if (type === 'IDAT') idat = true;
     if (['tEXt', 'zTXt', 'iTXt'].includes(type)) {
-      const [key, value] = decodeText(type, chunk);
+      const [keyword, value] = decodeText(type, chunk);
+      const key = keyword.toLowerCase();
       if (key === 'chara' || key === 'ccv3') {
+        // SillyTavern reads only tEXt, selects ccv3 first, and compares
+        // keywords case-insensitively. Reject unsupported and ambiguous
+        // metadata rather than report a different card as identical.
+        if (type !== 'tEXt') throw Error('unsupported-card-text-chunk');
         if (Object.hasOwn(result, key)) throw Error('duplicate-card-metadata');
         if (value.length > MAX_TEXT || !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(value)) throw Error('invalid-card-base64');
         const decoded = Buffer.from(value, 'base64');

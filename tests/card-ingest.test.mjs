@@ -82,13 +82,29 @@ test('validates embedded metadata, refuses duplicate assignments and catches uns
   manifest.cards[0].locales.zh.json='escape.json';
   await assert.rejects(inspect(manifest,dir),/asset-outside-root/);
 });
-test('reads supported compressed and international text metadata after image data', () => {
+test('rejects compressed and international card metadata that SillyTavern does not read', () => {
   const value=Buffer.from(JSON.stringify(card('Synthetic'))).toString('base64');
   const compressed=chunk('zTXt',Buffer.concat([Buffer.from('chara\0\0'),deflateSync(Buffer.from(value))]));
   const international=chunk('iTXt',Buffer.concat([Buffer.from('ccv3\0\x01\0\0\0'),deflateSync(Buffer.from(value))]));
-  const bytes=Buffer.concat([signature,chunk('IHDR',ihdr),chunk('IDAT',deflateSync(Buffer.from([0,0,0,0,0]))),compressed,international,chunk('IEND',Buffer.alloc(0))]);
-  const parsed=readPngMetadata(bytes);
-  assert.deepEqual(parsed.chara,card('Synthetic')); assert.deepEqual(parsed.ccv3,card('Synthetic'));
+  const wrap = metadata => Buffer.concat([signature,chunk('IHDR',ihdr),chunk('IDAT',deflateSync(Buffer.from([0,0,0,0,0]))),metadata,chunk('IEND',Buffer.alloc(0))]);
+  assert.throws(()=>readPngMetadata(wrap(compressed)),/unsupported-card-text-chunk/);
+  assert.throws(()=>readPngMetadata(wrap(international)),/unsupported-card-text-chunk/);
+});
+test('normalizes card keywords and rejects case-insensitive duplicates in either order', async t => {
+  const {dir,manifest}=await fixture(t);
+  const matching=card('English'), differing=card('English');
+  differing.data.description='Different synthetic card';
+  const upperOnly = readPngMetadata(png({CCV3:matching,CHARA:matching}));
+  assert.deepEqual(upperOnly.ccv3, matching);
+  for (const entries of [{CCV3:differing,ccv3:matching},{ccv3:matching,CCV3:differing}]) {
+    await writeFile(path.join(dir,'en.png'),png(entries));
+    const report=await inspect(manifest,dir);
+    assert.equal(report.cards[0].locales.en.png.status,'invalid');
+    assert.equal(report.cards[0].locales.en.png.issue,'duplicate-card-metadata');
+    assert.deepEqual(report.cards[0].locales.en.comparison,{});
+    assert.equal(report.cards[0].locales.en.review,'unverified');
+    await assert.rejects(extract(path.join(dir,'en.png'),'ccv3',path.join(dir,'unsafe.json')),/duplicate-card-metadata/);
+  }
 });
 test('CLI writes private report only outside the repository and does not overwrite', async t => {
   const {dir,manifest}=await fixture(t);
