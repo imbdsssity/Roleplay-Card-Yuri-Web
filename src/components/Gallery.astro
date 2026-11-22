@@ -1,0 +1,17 @@
+---
+import { copy } from '../lib/copy.mjs';
+import { itemPath } from '../lib/archive.mjs';
+interface Props { locale: 'en' | 'zh'; items: any[]; kind: 'card' | 'worldbook' }
+const { locale, items, kind } = Astro.props;
+const t = copy[locale];
+const chunks: any[][] = [];
+for (let i = 0; i < items.length; i += 24) chunks.push(items.slice(i, i + 24));
+---
+<section class="archive-section" id={kind === 'worldbook' ? 'worldbooks' : 'cards'}>
+  <div class="section-heading"><div><p class="eyebrow">{locale === 'zh' ? (kind === 'worldbook' ? '世界书' : '角色卡') : (kind === 'worldbook' ? 'WORLD BOOKS' : 'CHARACTER CARDS')}</p><h2>{kind === 'worldbook' ? t.worldbooks : t.cards}</h2></div><p>{kind === 'worldbook' ? t.booksIntro : t.cardsIntro}</p></div>
+  {items.length === 0 ? <p class="empty">{kind === 'worldbook' ? t.emptyBooks : t.emptyCards}</p> : chunks.map((chunk, index) => index === 0 ? (
+    <div class="gallery">{chunk.map((item) => <a class="tile" href={itemPath(item, locale)}><div class="tile-image"><img src={item.imagePath} alt="" loading="lazy" decoding="async" width="600" height="750" /></div><div class="tile-copy"><h3>{item.title[locale]}</h3><p>{item.summary[locale]}</p></div></a>)}</div>
+  ) : (
+    <details class="more-items"><summary>{t.more}</summary><div class="gallery">{chunk.map((item) => <a class="tile" href={itemPath(item, locale)}><div class="tile-image"><img src={item.imagePath} alt="" loading="lazy" decoding="async" width="600" height="750" /></div><div class="tile-copy"><h3>{item.title[locale]}</h3><p>{item.summary[locale]}</p></div></a>)}</div></details>
+  ))}
+</section>

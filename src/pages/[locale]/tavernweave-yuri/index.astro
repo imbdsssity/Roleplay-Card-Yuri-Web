@@ -1,4 +1,19 @@
 ---
-// The plugin page is reserved until verified content is added in Phase 1.
-export function getStaticPaths() { return []; }
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import { copy } from '../../../lib/copy.mjs';
+import { pluginSchema } from '../../../lib/content-schema.mjs';
+export function getStaticPaths() { return ['en', 'zh'].map((locale) => ({params: {locale}})); }
+const locale = Astro.params.locale as 'en' | 'zh';
+const t = copy[locale];
+const pages = import.meta.glob<{default: any}>('/src/content/plugin/*.md', {eager: true});
+const manifests = import.meta.glob('/src/content/plugin/*.json', {eager: true, import: 'default'});
+const Article = pages[`/src/content/plugin/${locale}.md`]?.default;
+const raw = manifests['/src/content/plugin/release.json'];
+const release = raw ? pluginSchema.parse(raw) : null;
 ---
+<SiteLayout locale={locale} title="TavernWeave-Yuri" alternatePath={`/${locale === 'en' ? 'zh' : 'en'}/tavernweave-yuri/`}>
+  <div class="page-shell detail-page"><a class="back" href={`/${locale}/`}>{t.back}</a><article class="prose plugin-prose">
+    {Article ? <Article /> : <><h1>TavernWeave-Yuri</h1><p>{t.pending}</p></>}
+    {release && <section class="release-list" aria-label={locale === 'zh' ? '下载' : 'Downloads'}><h2>{locale === 'zh' ? '下载' : 'Downloads'}</h2><p>Version {release.version}</p><ul>{release.assets.map((asset) => <li><a href={asset.url}>{asset.label[locale]} ({asset.format.toUpperCase()})</a><p>{asset.compatibility[locale]}</p></li>)}</ul></section>}
+  </article></div>
+</SiteLayout>
