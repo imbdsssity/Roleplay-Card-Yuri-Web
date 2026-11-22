@@ -26,7 +26,7 @@ const Card = z.object({ ...common, type: z.literal('card'),
 }).strict();
 const Worldbook = z.object({ ...common, type: z.literal('worldbook'), json: locale(file.nullable()),
   references: locale(z.array(text)),
-  mapping: z.array(z.object({ uid: z.union([z.string(), z.number()]), codePrefix: text.nullable(),
+  mapping: z.array(z.object({ uid: z.union([z.string(), z.number()]), codePrefix: locale(text.nullable()),
     entry: locale(text), activation: locale(text), source: locale(text) }).strict()),
   mappingReview: locale(z.object({ sourceEntryCount: z.number().int().nonnegative().nullable(), checkedAgainst: text.nullable() }).strict()),
 }).strict();

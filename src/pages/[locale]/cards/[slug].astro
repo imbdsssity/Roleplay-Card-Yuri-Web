@@ -1,4 +1,12 @@
 ---
-// Detail routes will be generated from reviewed published content in Phase 1.
-export function getStaticPaths() { return []; }
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import ArchiveDetail from '../../../components/ArchiveDetail.astro';
+import { pagesFor, itemPath } from '../../../lib/archive.mjs';
+import { requireDetailArticle } from '../../../lib/detail-article.mjs';
+export function getStaticPaths() { return pagesFor('card'); }
+const { item } = Astro.props;
+const locale = Astro.props.locale as 'en' | 'zh';
+const markdown = import.meta.glob<{default: any}>('/src/content/cards/**/*.md', { eager: true });
+const Article = requireDetailArticle(markdown, item, locale);
 ---
+<SiteLayout locale={locale} title={item.title[locale]} description={item.summary[locale]} alternatePath={itemPath(item, locale === 'en' ? 'zh' : 'en')}><ArchiveDetail item={item} locale={locale} Article={Article} /></SiteLayout>

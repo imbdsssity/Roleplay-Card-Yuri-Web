@@ -114,7 +114,10 @@
     "mapping": [
       {
         "uid": 0,
-        "codePrefix": null,
+        "codePrefix": {
+          "en": "EN-PREFIX",
+          "zh": "ZH-PREFIX"
+        },
         "entry": {
           "en": "Example",
           "zh": "Example"

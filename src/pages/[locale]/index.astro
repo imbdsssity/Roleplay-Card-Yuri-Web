@@ -1,11 +1,16 @@
 ---
-export function getStaticPaths() {
-  return [{ params: { locale: 'en' } }, { params: { locale: 'zh' } }];
-}
-const zh = Astro.params.locale === 'zh';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import Gallery from '../../components/Gallery.astro';
+import { published } from '../../lib/archive.mjs';
+import { copy } from '../../lib/copy.mjs';
+export function getStaticPaths() { return ['en', 'zh'].map((locale) => ({params: {locale}})); }
+const locale = Astro.params.locale as 'en' | 'zh';
+const t = copy[locale];
 ---
-<!doctype html>
-<html lang={zh ? 'zh-Hans' : 'en'}>
-  <head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="robots" content="noindex, nofollow" /><title>{zh ? '角色扮演档案' : 'Roleplay Archive'}</title></head>
-  <body><main><h1>{zh ? '角色扮演档案' : 'Roleplay Archive'}</h1><p>{zh ? '网站正在建设中。' : 'This site is under construction.'}</p></main></body>
-</html>
+<SiteLayout locale={locale} alternatePath={`/${locale === 'en' ? 'zh' : 'en'}/`}>
+  <div class="page-shell">
+    <section class="welcome"><p class="eyebrow">{locale === 'zh' ? '角色扮演档案' : 'ROLEPLAY ARCHIVE'}</p><h1>{t.welcome}<span class="brand-mark">.</span></h1><p class="welcome-copy">{t.intro}</p><a class="plugin-link" href={`/${locale}/tavernweave-yuri/`}>{t.plugin}</a></section>
+    <Gallery locale={locale} items={published.filter((x) => x.type === 'worldbook')} kind="worldbook" />
+    <Gallery locale={locale} items={published.filter((x) => x.type === 'card')} kind="card" />
+  </div>
+</SiteLayout>
