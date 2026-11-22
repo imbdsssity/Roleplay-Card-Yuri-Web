@@ -9,7 +9,7 @@ const t = copy[locale];
 ---
 <SiteLayout locale={locale} alternatePath={`/${locale === 'en' ? 'zh' : 'en'}/`}>
   <div class="page-shell">
-    <section class="welcome"><p class="eyebrow">ROLEPLAY ARCHIVE</p><h1>{t.welcome}<span class="brand-mark">.</span></h1><p class="welcome-copy">{t.intro}</p><a class="plugin-link" href={`/${locale}/tavernweave-yuri/`}>{t.plugin}</a></section>
+    <section class="welcome"><p class="eyebrow">{locale === 'zh' ? '角色扮演档案' : 'ROLEPLAY ARCHIVE'}</p><h1>{t.welcome}<span class="brand-mark">.</span></h1><p class="welcome-copy">{t.intro}</p><a class="plugin-link" href={`/${locale}/tavernweave-yuri/`}>{t.plugin}</a></section>
     <Gallery locale={locale} items={published.filter((x) => x.type === 'worldbook')} kind="worldbook" />
     <Gallery locale={locale} items={published.filter((x) => x.type === 'card')} kind="card" />
   </div>
