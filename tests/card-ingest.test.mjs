@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { deflateSync } from 'node:zlib';
 import { spawnSync } from 'node:child_process';
-import { inspect, makeDrafts, readPngMetadata } from '../scripts/card-ingest.mjs';
+import { inspect, makeDrafts, parseCard, readPngMetadata } from '../scripts/card-ingest.mjs';
 import { extract } from '../scripts/extract-card-json.mjs';
 import { createHash } from 'node:crypto';
 import { selectPublished } from '../src/lib/content-schema.mjs';
@@ -112,4 +112,24 @@ test('extracts exact metadata bytes, preserves PNG, records hashes and never ove
   await assert.rejects(extract(source,'ccv3',output),/EEXIST/);
   await assert.rejects(extract(source,'bogus',path.join(dir,'invalid.json')),/invalid-metadata-key/);
   await assert.rejects(extract(source,'ccv3',path.join(process.cwd(),'reject.json')),/output-must-be-outside-repository/);
+});
+test('rejects duplicate keys including escaped equivalents and precision-sensitive numbers', async t => {
+  const {dir,manifest}=await fixture(t);
+  const duplicate='{"spec":"chara_card_v3","data":{"name":"first","na\\u006de":"last"}}';
+  assert.throws(()=>parseCard(Buffer.from(duplicate)),/duplicate-json-key/);
+  for (const token of ['9007199254740992','9007199254740993','0.10000000000000001','1e999','1e-999']) {
+    const value=`{"spec":"chara_card_v3","data":{"name":"synthetic","value":${token}}}`;
+    assert.throws(()=>parseCard(Buffer.from(value)),/ambiguous-json-number/);
+  }
+  const reordered={data:{description:'synthetic only',character_version:'1.0',name:'English'},spec_version:'3.0',spec:'chara_card_v3'};
+  await writeFile(path.join(dir,'en.png'),png({ccv3:reordered}));
+  assert.equal((await inspect(manifest,dir)).cards[0].locales.en.comparison.ccv3,'identical');
+  const ambiguousPng=Buffer.concat([signature,chunk('IHDR',ihdr),chunk('IDAT',deflateSync(Buffer.from([0,0,0,0,0]))),chunk('tEXt',Buffer.from('ccv3\0'+Buffer.from(duplicate).toString('base64'))),chunk('IEND',Buffer.alloc(0))]);
+  await writeFile(path.join(dir,'bad.png'),ambiguousPng);
+  await assert.rejects(extract(path.join(dir,'bad.png'),'ccv3',path.join(dir,'out.json')),/duplicate-json-key/);
+  await writeFile(path.join(dir,'en.json'), duplicate);
+  const report = await inspect(manifest,dir);
+  assert.equal(report.cards[0].locales.en.json.status, 'invalid');
+  assert.equal(report.cards[0].locales.en.comparison.ccv3, 'unavailable');
+  assert.equal(report.cards[0].locales.en.review, 'unverified');
 });
