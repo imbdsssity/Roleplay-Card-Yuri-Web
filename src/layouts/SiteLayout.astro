@@ -14,7 +14,7 @@ const alternate = new URL(alternatePath, Astro.site);
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light dark" />
   <script is:inline>try{const t=localStorage.getItem('archive-theme');if(t==='light'||t==='dark')document.querySelector('meta[name="color-scheme"]').content=t}catch{}</script>
-  <title>{title ? `${title} · ${t.site}` : t.site}</title>
+  <title>{title ? `${title} · ${t.site}` : `${t.site}.`}</title>
   <meta name="description" content={description || t.intro} />
   <link rel="canonical" href={canonical} />
   <link rel="alternate" hreflang={locale === 'zh' ? 'zh-Hans' : 'en'} href={canonical} />
@@ -31,7 +31,12 @@ const alternate = new URL(alternatePath, Astro.site);
     </nav>
   </div></header>
   <main id="main"><slot /></main>
-  <footer class="site-footer"><div><span>{t.site}</span><span>{t.rights}</span></div></footer>
+  <footer class="site-footer">
+    <div>
+      <span class="footer-brand">{t.site}</span>
+      <span class="footer-quote" lang="en"><span class="footer-lily" aria-hidden="true"></span><span>"But don't look back in anger," I heard you say.</span></span>
+    </div>
+  </footer>
   <script>
     import { chooseOppositeTheme, isDarkTheme } from '../lib/theme.mjs';
     const meta = document.querySelector('meta[name="color-scheme"]');

@@ -6,10 +6,17 @@ Yuri Card Workbench is a specialized distribution built on [TavernWeave](https:/
 
 ## Four workflows
 
-- **`yuri-card-creator`** creates an original card through conversation, with room to review and revise the playable opening and characters.
-- **`adapt-yuri-card`** adapts an existing JSON or PNG card. The original is retained, and unrelated fields, scripts and worldbook loading settings are protected; structural migrations or script changes need separate authorization.
-- **`post-to-yuri-card`** turns a supplied post into a card, mapping the poster to `{{user}}` and distinguishing source facts from creative additions.
-- **`novel-excerpt-to-yuri-card`** adapts selected TXT, Markdown or EPUB prose, retaining source records and tracking progress across stages. It does not claim to have read unselected chapters.
+<table class="workflow-table" aria-label="Four workflows">
+  <thead>
+    <tr><th scope="col">Workflow</th><th scope="col">Description</th></tr>
+  </thead>
+  <tbody>
+    <tr><th scope="row"><code>yuri-card-creator</code></th><td>Creates an original Yuri card through conversation, with room to review and revise the playable opening and characters.</td></tr>
+    <tr><th scope="row"><code>adapt-yuri-card</code></th><td>Adapts an existing JSON or PNG card into a Yuri card. It retains the original and protects unrelated fields, scripts, and worldbook loading settings. Structural migrations or script changes need separate authorization.</td></tr>
+    <tr><th scope="row"><code>post-to-yuri-card</code></th><td>Turns a supplied post into a Yuri card, mapping the poster to <code>{{user}}</code> and distinguishing source facts from creative additions.</td></tr>
+    <tr><th scope="row"><code>novel-excerpt-to-yuri-card</code></th><td>Adapts selected TXT, Markdown, or EPUB prose into a Yuri card, retaining source records and tracking progress across stages. It makes no claim about unselected chapters.</td></tr>
+  </tbody>
+</table>
 
 The four workflows include 23 upstream dependency skills in the complete distribution. File access, Python, Node and optional image or search tools depend on the host environment.
 
