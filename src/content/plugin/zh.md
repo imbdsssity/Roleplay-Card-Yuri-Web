@@ -6,10 +6,17 @@ Yuri Card Workbench 是基于上游角色卡工程项目 [TavernWeave](https://g
 
 ## 四个工作流
 
-- **`yuri-card-creator`** 通过对话原创角色卡，供你审阅和修改人物与可游玩的开场。
-- **`adapt-yuri-card`** 改编现有 JSON 或 PNG 角色卡，保留原件，并保护无关字段、脚本和世界书加载设置；结构迁移或脚本修改需要单独授权。
-- **`post-to-yuri-card`** 将提供的帖子改编为角色卡，把发帖人映射为 `{{user}}`，并区分原文事实与新增创作。
-- **`novel-excerpt-to-yuri-card`** 改编选定的 TXT、Markdown 或 EPUB 文字，保留来源记录并跟踪分阶段进度，不声称已阅读未选定的章节。
+<table class="workflow-table" aria-label="四个工作流">
+  <thead>
+    <tr><th scope="col">工作流</th><th scope="col">说明</th></tr>
+  </thead>
+  <tbody>
+    <tr><th scope="row"><code>yuri-card-creator</code></th><td>通过对话原创百合（Yuri）角色卡，供你审阅和修改人物与可游玩的开场。</td></tr>
+    <tr><th scope="row"><code>adapt-yuri-card</code></th><td>将现有 JSON 或 PNG 角色卡改编为百合（Yuri）角色卡，保留原件，并保护无关字段、脚本和世界书加载设置。结构迁移或脚本修改需要单独授权。</td></tr>
+    <tr><th scope="row"><code>post-to-yuri-card</code></th><td>将提供的帖子改编为百合（Yuri）角色卡，把发帖人映射为 <code>{{user}}</code>，并区分原文事实与新增创作。</td></tr>
+    <tr><th scope="row"><code>novel-excerpt-to-yuri-card</code></th><td>将选定的 TXT、Markdown 或 EPUB 文字改编为百合（Yuri）角色卡，保留来源记录并跟踪各阶段进度。处理范围以选定的章节为限。</td></tr>
+  </tbody>
+</table>
 
 完整分发包含四个工作流及 23 个上游依赖技能。文件访问、Python、Node 及可选的图片或搜索工具取决于实际宿主环境。
 
