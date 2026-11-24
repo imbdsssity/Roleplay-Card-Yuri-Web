@@ -25,7 +25,7 @@ const alternate = new URL(alternatePath, Astro.site);
   <header class="site-header"><div class="header-inner">
     <a class="brand" href={`/${locale}/`}>{t.site}<span class="brand-mark">.</span></a>
     <nav aria-label={locale === 'zh' ? '页面设置' : 'Site preferences'}>
-      <a class="header-link" href="https://github.com/Erxi-Yu-1209" aria-label={t.github}>GitHub</a>
+      <a class="header-link" href="https://github.com/imbdsssity/Roleplay-Card-Yuri-Web" aria-label={t.github}>GitHub</a>
       <a class="locale-link" href={alternatePath} hreflang={locale === 'zh' ? 'en' : 'zh-Hans'} lang={locale === 'zh' ? 'en' : 'zh-Hans'}>{locale === 'zh' ? 'EN' : '中文'}</a>
       <button class="theme-toggle" type="button" aria-label={t.theme} aria-pressed="false" hidden><span aria-hidden="true">◐</span></button>
     </nav>
