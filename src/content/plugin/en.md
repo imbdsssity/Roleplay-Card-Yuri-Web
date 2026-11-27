@@ -2,7 +2,9 @@
 
 *Four starting points for creating and adapting yuri roleplay cards.*
 
-Yuri Card Workbench is a specialized distribution built on [TavernWeave](https://github.com/LiarMTTT/TavernWeave), the upstream rolecard engineering project. It retains TavernWeave's general-purpose skills and adds four yuri workflows. The [upstream documentation](https://github.com/LiarMTTT/TavernWeave/blob/v2.4.0/README.md) explains the underlying project.
+TavernWeave-Yuri started with a gap in general-purpose rolecard workflows. Upstream [TavernWeave](https://github.com/LiarMTTT/TavernWeave) provides skills for writing, worldbuilding, and card engineering. A general-purpose workflow leaves creators to decide how those skills should work together for a particular roleplay theme and how to handle the narrative decisions that theme calls for.
+
+Yuri Card Workbench keeps those upstream skills and coordinates them through four workflows designed for yuri roleplay. They use shared rules for deciding when an authorized change in circumstances justifies a different relationship outcome, keeping source facts distinct from new fiction, and leaving the player's choices and reactions open in a playable scene. The [upstream documentation](https://github.com/LiarMTTT/TavernWeave/blob/v2.4.0/README.md) describes the underlying toolkit.
 
 ## Four workflows
 
@@ -12,6 +14,14 @@ Yuri Card Workbench is a specialized distribution built on [TavernWeave](https:/
 - **`novel-excerpt-to-yuri-card`** adapts selected TXT, Markdown or EPUB prose, retaining source records and tracking progress across stages. It does not claim to have read unselected chapters.
 
 The four workflows include 23 upstream dependency skills in the complete distribution. File access, Python, Node and optional image or search tools depend on the host environment.
+
+## Yuri Card Workbench Lite
+
+Lite brings the same four workflows and shared Yuri rules to Chat Mode, where a plugin installation, command line, or Python and Node.js may be unavailable. You can paste text and review card and worldbook drafts in the conversation. For a PNG card, supply its extracted card JSON. For an EPUB, supply the extracted text.
+
+For a novel, work through chapters in order and save a copyable checkpoint after each batch. It records what has been covered, which choices were made during adaptation, and what characters know at the planned opening. To resume, start a new conversation with Lite and bring over the checkpoint, any draft you need, and the next batch of text.
+
+Setup materials are available for portable copy-and-paste use, ChatGPT Projects, and compatible Custom GPTs. C.2 is an unreleased candidate. The ChatGPT Projects reference-access and original-card smoke tests passed. Existing-card output, recovery across independent chats, and the remaining host checks are still under evaluation. See the [Lite setup guide](https://github.com/imbdsssity/TavernWeave-Yuri/blob/main/distributions/chat-mode-lite/README.md) and [validation record](https://github.com/imbdsssity/TavernWeave-Yuri/blob/main/distributions/chat-mode-lite/packages/CHECKS.md#signed-in-c2-validation).
 
 ## Download and install
 

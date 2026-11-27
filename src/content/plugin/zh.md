@@ -2,7 +2,9 @@
 
 *从四种起点出发，创作和改编百合角色卡。*
 
-Yuri Card Workbench 是基于上游角色卡工程项目 [TavernWeave](https://github.com/LiarMTTT/TavernWeave) 的百合专用分发版本，保留通用技能，并加入四个百合工作流。可参阅[上游项目说明](https://github.com/LiarMTTT/TavernWeave/blob/v2.4.0/README.md)了解基础项目。
+TavernWeave-Yuri 源于通用角色卡工作流留下的一个问题。上游 [TavernWeave](https://github.com/LiarMTTT/TavernWeave) 提供写作、世界构建和角色卡工程技能。到了具体的角色扮演题材，怎样协调这些技能、怎样处理题材特有的叙事问题，仍要由创作者自行决定。
+
+Yuri Card Workbench 保留上游技能，通过四个面向百合角色扮演的工作流把它们串联起来。四个流程都要求根据获准调整的情境判断关系走向是否有理由改变，区分原文事实与新增虚构，并在可游玩的场景里把选择和反应留给玩家。基础工具的用法见[上游项目说明](https://github.com/LiarMTTT/TavernWeave/blob/v2.4.0/README.md)。
 
 ## 四个工作流
 
@@ -12,6 +14,14 @@ Yuri Card Workbench 是基于上游角色卡工程项目 [TavernWeave](https://g
 - **`novel-excerpt-to-yuri-card`** 改编选定的 TXT、Markdown 或 EPUB 文字，保留来源记录并跟踪分阶段进度，不声称已阅读未选定的章节。
 
 完整分发包含四个工作流及 23 个上游依赖技能。文件访问、Python、Node 及可选的图片或搜索工具取决于实际宿主环境。
+
+## Yuri Card Workbench Lite 轻量版
+
+Lite 将同样的四个工作流和百合创作规则带到聊天模式。在无法安装插件、使用命令行或运行 Python 和 Node.js 的环境里，也可以粘贴文本，在对话中审阅角色卡和世界书草稿。使用 PNG 角色卡时，请提供从图片中提取的角色卡 JSON。使用 EPUB 时，请提供提取后的正文。
+
+小说可以按章节顺序分批处理，每批结束后保存一份可复制的检查点，记录已处理的范围、已作出的改编决定，以及预定开场时人物掌握的信息。续接时，在新对话里启用 Lite，带上检查点、所需草稿和下一批正文。
+
+目前提供通用复制粘贴、ChatGPT Projects 和兼容的 Custom GPT 三种配置方式。C.2 是尚未正式发布的候选版本。ChatGPT Projects 已通过参考资料读取和原创卡的基础测试。已有卡的交付形式、独立会话间的续接以及其余宿主测试仍在评估中。详见 [Lite 中文使用指南](https://github.com/imbdsssity/TavernWeave-Yuri/blob/main/distributions/chat-mode-lite/README.zh-CN.md)和[验证记录](https://github.com/imbdsssity/TavernWeave-Yuri/blob/main/distributions/chat-mode-lite/packages/CHECKS.md#signed-in-c2-validation)。
 
 ## 下载与安装
 
